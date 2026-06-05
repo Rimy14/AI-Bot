@@ -25,13 +25,30 @@ app.post("/api/chat", async (req, res) => {
       parts: [{ text: msg.content }]
     }));
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: contents,
-      config: {
-        systemInstruction: "You are a helpful, friendly AI assistant."
+    let response;
+    let retries = 3;
+    let delay = 1000;
+    while (retries > 0) {
+      try {
+        response = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: contents,
+          config: {
+            systemInstruction: "You are a helpful, friendly AI assistant."
+          }
+        });
+        break;
+      } catch (error) {
+        if (error.status === 503 && retries > 1) {
+          console.warn(Gemini 503 error, retrying in ms...);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          retries--;
+          delay *= 2;
+        } else {
+          throw error;
+        }
       }
-    });
+    }
 
     res.json({ reply: response.text });
   } catch (error) {
