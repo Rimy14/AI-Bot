@@ -1,4 +1,4 @@
-﻿const express = require("express");
+const express = require("express");
 const cors = require("cors");
 const { GoogleGenAI } = require("@google/genai");
 require("dotenv").config({ path: "../.env" });
@@ -40,7 +40,7 @@ app.post("/api/chat", async (req, res) => {
         break;
       } catch (error) {
         if (error.status === 503 && retries > 1) {
-          console.warn(Gemini 503 error, retrying in ms...);
+          console.warn(`Gemini 503 error, retrying in ${delay}ms...`);
           await new Promise(resolve => setTimeout(resolve, delay));
           retries--;
           delay *= 2;

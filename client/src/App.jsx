@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./App.css";
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
       }
       setMessages([...newMessages, { role: "assistant", content: data.reply }]);
     } catch (err) {
-      setMessages([...newMessages, { role: "assistant", content: Error:  }]);
+      setMessages([...newMessages, { role: "assistant", content: `Error: ${err.message || "Could not reach server."}` }]);
     }
     setLoading(false);
   };
