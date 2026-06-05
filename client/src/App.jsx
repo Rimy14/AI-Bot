@@ -29,9 +29,12 @@ function App() {
         body: JSON.stringify({ messages: newMessages }),
       });
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong.");
+      }
       setMessages([...newMessages, { role: "assistant", content: data.reply }]);
-    } catch {
-      setMessages([...newMessages, { role: "assistant", content: "Error: Could not reach server." }]);
+    } catch (err) {
+      setMessages([...newMessages, { role: "assistant", content: Error:  }]);
     }
     setLoading(false);
   };
