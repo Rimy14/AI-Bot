@@ -45,16 +45,24 @@ function App() {
         <div className="avatar">🤖</div>
         <div>
           <div className="header-name">AI Assistant</div>
-          <div className="header-status">● Online</div>
+          <div className="header-status-container">
+            <span className="status-dot"></span>
+            <span className="header-status">Online</span>
+          </div>
         </div>
       </div>
 
       <div className="chat-messages">
-        {messages.map((msg, i) => (
-          <div key={i} className={`message ${msg.role}`}>
-            <div className="bubble">{msg.content}</div>
-          </div>
-        ))}
+        {messages.map((msg, i) => {
+          const isError = msg.content && msg.content.startsWith("Error:");
+          return (
+            <div key={i} className={`message ${msg.role}`}>
+              <div className={`bubble ${isError ? "error-bubble" : ""}`}>
+                {msg.content}
+              </div>
+            </div>
+          );
+        })}
         {loading && (
           <div className="message assistant">
             <div className="bubble typing">
