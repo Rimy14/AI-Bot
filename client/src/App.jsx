@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const [messages, setMessages] = useState([
-    { role: "assistant", content: "Hey! ðŸ‘‹ I'm your AI assistant. Ask me anything!" },
+    { role: "assistant", content: "Hey! 👋 I'm your AI assistant. Ask me anything!" },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,16 +42,16 @@ function App() {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <div className="avatar">ðŸ¤–</div>
+        <div className="avatar">🤖</div>
         <div>
           <div className="header-name">AI Assistant</div>
-          <div className="header-status">â— Online</div>
+          <div className="header-status">● Online</div>
         </div>
       </div>
 
       <div className="chat-messages">
         {messages.map((msg, i) => (
-          <div key={i} className={message }>
+          <div key={i} className={`message ${msg.role}`}>
             <div className="bubble">{msg.content}</div>
           </div>
         ))}
@@ -76,7 +76,7 @@ function App() {
           disabled={loading}
         />
         <button className="send-btn" onClick={sendMessage} disabled={loading}>
-          âž¤
+          ➤
         </button>
       </div>
     </div>
