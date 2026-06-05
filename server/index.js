@@ -25,6 +25,13 @@ app.post("/api/chat", async (req, res) => {
       parts: [{ text: msg.content }]
     }));
 
+    const currentDate = new Date().toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+
     let response;
     let retries = 3;
     let delay = 1000;
@@ -34,7 +41,7 @@ app.post("/api/chat", async (req, res) => {
           model: "gemini-2.5-flash",
           contents: contents,
           config: {
-            systemInstruction: "You are a helpful, friendly AI assistant."
+            systemInstruction: `You are a helpful, friendly AI assistant. The current date is ${currentDate}.`
           }
         });
         break;
